@@ -1,7 +1,9 @@
 package com.utcn.proiectScd.entity;
 
+import com.utcn.proiectScd.util.DeliveryPackageStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,8 +15,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 
-public class Package {
+public class DeliveryPackage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idPackage", unique = true, nullable = false)
@@ -36,5 +39,5 @@ public class Package {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "packageStatus", nullable = false)
-    private PackageStatus packageStatus;
+    private DeliveryPackageStatus deliveryPackageStatus;
 }

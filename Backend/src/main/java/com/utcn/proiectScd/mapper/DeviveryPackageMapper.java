@@ -10,7 +10,6 @@ public class DeviveryPackageMapper {
     public DeliveryPackageDTO toPackageDTO(DeliveryPackage deliveryPackage) {
         return DeliveryPackageDTO.builder()
                 .idPackage(deliveryPackage.getIdPackage())
-                .courier(deliveryPackage.getCourier())
                 .createdOn(deliveryPackage.getCreatedOn())
                 .deliveryAddress(deliveryPackage.getDeliveryAddress())
                 .payOnDelivery(deliveryPackage.isPayOnDelivery())
@@ -20,7 +19,6 @@ public class DeviveryPackageMapper {
     public DeliveryPackage toDeliveryPackage(DeliveryPackageDTO deliveryPackageDTO) {
         return DeliveryPackage.builder()
                 .idPackage(deliveryPackageDTO.getIdPackage())
-                .courier(deliveryPackageDTO.getCourier())
                 .createdOn(deliveryPackageDTO.getCreatedOn())
                 .deliveryAddress(deliveryPackageDTO.getDeliveryAddress())
                 .payOnDelivery(deliveryPackageDTO.isPayOnDelivery())

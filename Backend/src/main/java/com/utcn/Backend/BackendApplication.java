@@ -1,13 +1,11 @@
-package com.utcn.proiectScd;
+package com.utcn.Backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProiectScdApplication {
-
+public class BackendApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(ProiectScdApplication.class, args);
+		SpringApplication.run(BackendApplication.class, args);
 	}
-
 }

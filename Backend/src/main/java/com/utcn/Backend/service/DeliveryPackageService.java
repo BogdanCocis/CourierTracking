@@ -1,10 +1,10 @@
-package com.utcn.proiectScd.service;
+package com.utcn.Backend.service;
 
-import com.utcn.proiectScd.dto.DeliveryPackageDTO;
-import com.utcn.proiectScd.entity.DeliveryPackage;
-import com.utcn.proiectScd.mapper.DeviveryPackageMapper;
-import com.utcn.proiectScd.repository.DeliveryPackageRepository;
-import com.utcn.proiectScd.util.DeliveryPackageStatus;
+import com.utcn.Backend.dto.DeliveryPackageDTO;
+import com.utcn.Backend.entity.DeliveryPackage;
+import com.utcn.Backend.entity.DeliveryPackageStatus;
+import com.utcn.Backend.mapper.DeliveryPackageMapper;
+import com.utcn.Backend.repository.DeliveryPackageRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
 
 @Service
 
-public class DeviveryPackageService {
+public class DeliveryPackageService {
     @Autowired
     private DeliveryPackageRepository deliveryPackageRepository;
 
     @Autowired
-    private DeviveryPackageMapper deviveryPackageMapper;
+    private DeliveryPackageMapper deviveryPackageMapper;
 
     public List<DeliveryPackageDTO> getAllPackage() {
         return deliveryPackageRepository.findAll()

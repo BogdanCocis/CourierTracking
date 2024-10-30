@@ -1,7 +1,7 @@
-package com.utcn.proiectScd.controller;
+package com.utcn.Backend.controller;
 
-import com.utcn.proiectScd.dto.DeliveryPackageDTO;
-import com.utcn.proiectScd.service.DeviveryPackageService;
+import com.utcn.Backend.dto.DeliveryPackageDTO;
+import com.utcn.Backend.service.DeliveryPackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @CrossOrigin
 public class DeliveryPackageController {
     @Autowired
-    private DeviveryPackageService deliveryPackageService;
+    private DeliveryPackageService deliveryPackageService;
 
     @GetMapping
     public List<DeliveryPackageDTO> getAllPackages() {

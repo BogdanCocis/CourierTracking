@@ -1,6 +1,5 @@
-package com.utcn.proiectScd.entity;
+package com.utcn.Backend.entity;
 
-import com.utcn.proiectScd.util.CourierRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +8,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Builder
+
 public class Courier {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

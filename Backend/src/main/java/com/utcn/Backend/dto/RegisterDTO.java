@@ -1,6 +1,6 @@
-package com.utcn.proiectScd.dto;
+package com.utcn.Backend.dto;
 
-import com.utcn.proiectScd.util.CourierRole;
+import com.utcn.Backend.entity.CourierRole;
 import lombok.Data;
 
 @Data

@@ -1,6 +1,5 @@
-package com.utcn.proiectScd.entity;
+package com.utcn.Backend.entity;
 
-import com.utcn.proiectScd.util.DeliveryPackageStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,13 +9,11 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class DeliveryPackage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +22,7 @@ public class DeliveryPackage {
 
     @ManyToOne
     @JoinColumn(name = "courier_id", nullable = false)
-    private Courier courier;
+   private Courier courier;
 
     @Column(name = "createdOn", nullable = false)
     @CreationTimestamp
@@ -40,4 +37,7 @@ public class DeliveryPackage {
     @Enumerated(EnumType.STRING)
     @Column(name = "packageStatus", nullable = false)
     private DeliveryPackageStatus deliveryPackageStatus;
+
+    @Column(name = "clientEmail", nullable = false)
+    private String clinetEmail;
 }

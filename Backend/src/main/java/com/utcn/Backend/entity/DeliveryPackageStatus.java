@@ -1,4 +1,4 @@
-package com.utcn.proiectScd.util;
+package com.utcn.Backend.entity;
 
 public enum DeliveryPackageStatus {
     NEW,

@@ -1,7 +1,6 @@
-package com.utcn.proiectScd.dto;
+package com.utcn.Backend.dto;
 
-import com.utcn.proiectScd.entity.Courier;
-import com.utcn.proiectScd.util.DeliveryPackageStatus;
+import com.utcn.Backend.entity.DeliveryPackageStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,11 +12,12 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class DeliveryPackageDTO {
     private Integer idPackage;
-    private Courier courier;
     private Date createdOn;
     private String deliveryAddress;
     private boolean payOnDelivery;
     private DeliveryPackageStatus deliveryPackageStatus;
+    private String clinetEmail;
 }

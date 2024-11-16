@@ -5,11 +5,12 @@ import com.utcn.Backend.entity.Courier;
 
 
 public class CourierMapper {
-    public static Courier toCourier(RegisterDTO registerDto) {
+    public static Courier toCourier(RegisterDTO registerDTO) {
         return Courier.builder()
-                .email(registerDto.getEmail())
-                .password(registerDto.getPassword())
-                .courierRole(registerDto.getCourierRole())
+                .name(registerDTO.getName())
+                .email(registerDTO.getEmail())
+                .password(registerDTO.getPassword())
+                .courierRole(registerDTO.getCourierRole())
                 .build();
     }
 }

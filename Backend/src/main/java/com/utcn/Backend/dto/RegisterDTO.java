@@ -9,4 +9,5 @@ public class RegisterDTO {
     private String email;
     private String password;
     private CourierRole courierRole;
+    private String managerId;
 }

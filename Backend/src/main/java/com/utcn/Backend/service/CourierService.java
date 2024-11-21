@@ -1,5 +1,7 @@
 package com.utcn.Backend.service;
 
+import com.utcn.Backend.dto.CourierDTO;
+import com.utcn.Backend.dto.ManagerDeliveredDTO;
 import com.utcn.Backend.dto.RegisterDTO;
 import com.utcn.Backend.entity.Courier;
 import com.utcn.Backend.entity.CourierRole;
@@ -15,8 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -25,13 +29,13 @@ public class CourierService {
     private final SessionIdService sessionIdService;
     private final PasswordEncoder passwordEncoder;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final CourierMapper courierMapper;
 
     public Session login(String loginEmail, String loginPassword) throws Exception {
 
 
-        //Searching if user exists in DB based on the received email in body of the request
         Optional<Courier> courier = courierRepository.findByEmail(loginEmail);
-        if (courier.isPresent()) {//If user is present we get the encoded password from DB
+        if (courier.isPresent()) {
             Session session;
             String userPassword = courier.get().getPassword();
 
@@ -61,45 +65,56 @@ public class CourierService {
         throw new Exception("User not found!");
     }
 
-//    public void saveUser(RegisterDTO registerDTO) throws InvalidDataException, DuplicateException {
-//        UserValidator.validateRegister(registerDTO);
-//
-//        if (courierRepository.existsByEmail(registerDTO.getEmail())) {
-//            throw new DuplicateException("Email is already in use!");
-//        }
-//
-//        Courier courier = CourierMapper.toCourier(registerDTO);
-//        courier.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-//        courierRepository.save(courier);
-//    }
-public void saveUser(RegisterDTO registerDTO) throws InvalidDataException, DuplicateException {
 
-    UserValidator.validateRegister(registerDTO);
+    public void saveUser(RegisterDTO registerDTO) throws InvalidDataException, DuplicateException {
+        UserValidator.validateRegister(registerDTO);
 
-
-    if (courierRepository.existsByEmail(registerDTO.getEmail())) {
-        throw new DuplicateException("Email is already in use!");
-    }
-
-
-    Courier manager = null;
-    if (registerDTO.getCourierRole() == CourierRole.COURIER) {
-        if (registerDTO.getManagerId() == null || registerDTO.getManagerId().isEmpty()) {
-            throw new InvalidDataException("Manager ID is required for COURIER role!");
+        if (courierRepository.existsByEmail(registerDTO.getEmail())) {
+            throw new DuplicateException("Email is already in use!");
         }
 
-        manager = courierRepository.findById(UUID.fromString(registerDTO.getManagerId()))
-                .orElseThrow(() -> new InvalidDataException("Invalid manager ID!"));
+        Courier defaultManager = null;
+        if (registerDTO.getCourierRole() == null || registerDTO.getCourierRole() == CourierRole.COURIER) {
+            if (registerDTO.getManagerId() == null || registerDTO.getManagerId().isEmpty()) {
+                defaultManager = courierRepository.findByEmail("cocis.bogdan@yahoo.com")
+                        .orElseThrow(() -> new InvalidDataException("Default manager not found!"));
+            } else {
+                defaultManager = courierRepository.findById(UUID.fromString(registerDTO.getManagerId()))
+                        .orElseThrow(() -> new InvalidDataException("Invalid manager ID!"));
+            }
+        }
+
+        Courier courier = CourierMapper.toCourier(registerDTO);
+
+        if (registerDTO.getCourierRole() == null) {
+            courier.setCourierRole(CourierRole.COURIER);
+        }
+
+        courier.setManager(defaultManager);
+
+        courier.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+
+        courierRepository.save(courier);
     }
 
 
-    Courier courier = CourierMapper.toCourier(registerDTO);
-    courier.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-    courier.setManager(manager);
+    public List<CourierDTO> getCouriersWithoutPendingPackages() {
+        return courierRepository.getAllCouriersWithoutPendingPackages()
+                .stream()
+                .map(courierMapper::toCourierDTO)
+                .collect(Collectors.toList());
+    }
 
-
-    courierRepository.save(courier);
-}
+    public List<ManagerDeliveredDTO> getAllManagersAndDeliveredNumber() {
+        return courierRepository.getAllManagersAndDeliveredNumber()
+                .stream()
+                .map(result -> ManagerDeliveredDTO.builder()
+                        .managerName((String) result[0])
+                        .managerEmail((String) result[1])
+                        .deliveredCount((Long) result[2])
+                        .build())
+                .collect(Collectors.toList());
+    }
 
 }
 

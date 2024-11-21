@@ -23,7 +23,6 @@ import java.util.Collections;
 @RestController
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000", allowCredentials = "true")
-//@CrossOrigin(allowCredentials = "true")
 @RequestMapping("/api")
 public class AccountController {
     private final CourierService courierService;

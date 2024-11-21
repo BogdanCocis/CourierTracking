@@ -5,15 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class CourierDTO {
-    private UUID idCourier;
-    private String name;
-    private String email;
+public class ManagerDeliveredDTO {
+    private String managerName;
+    private String managerEmail;
+    private Long deliveredCount;
 }

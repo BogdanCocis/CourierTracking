@@ -12,12 +12,11 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class DeliveryPackageDTO {
     private Integer idPackage;
     private Date createdOn;
     private String deliveryAddress;
     private boolean payOnDelivery;
     private DeliveryPackageStatus deliveryPackageStatus;
-    private String clinetEmail;
+    private String clientEmail;
 }

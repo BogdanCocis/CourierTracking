@@ -39,5 +39,5 @@ public class DeliveryPackage {
     private DeliveryPackageStatus deliveryPackageStatus;
 
     @Column(name = "clientEmail", nullable = false)
-    private String clinetEmail;
+    private String clientEmail;
 }

@@ -10,6 +10,7 @@ import com.utcn.Backend.repository.DeliveryPackageRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,21 +18,27 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-
 public class DeliveryPackageService {
+
     @Autowired
     private DeliveryPackageRepository deliveryPackageRepository;
 
     @Autowired
-    private DeliveryPackageMapper deviveryPackageMapper;
+    private DeliveryPackageMapper deliveryPackageMapper;
 
     @Autowired
     private CourierRepository courierRepository;
 
+    @Autowired
+    private EmailService emailService;
+
+    @Value("${app.mail.sender}")
+    private String senderEmail;
+
     public List<DeliveryPackageDTO> getAllPackage() {
         return deliveryPackageRepository.findAll()
                 .stream()
-                .map(deviveryPackageMapper::toPackageDTO)
+                .map(deliveryPackageMapper::toPackageDTO)
                 .collect(Collectors.toList());
     }
 
@@ -47,7 +54,7 @@ public class DeliveryPackageService {
         Courier courier = courierRepository.findById(courierId)
                 .orElseThrow(() -> new EntityNotFoundException("Courier with id " + courierId + " not found"));
 
-        DeliveryPackage deliveryPackage = deviveryPackageMapper.toDeliveryPackage(deliveryPackageDTO);
+        DeliveryPackage deliveryPackage = deliveryPackageMapper.toDeliveryPackage(deliveryPackageDTO);
 
         deliveryPackage.setDeliveryPackageStatus(DeliveryPackageStatus.NEW);
 
@@ -55,9 +62,8 @@ public class DeliveryPackageService {
 
         deliveryPackage = deliveryPackageRepository.save(deliveryPackage);
 
-        return deviveryPackageMapper.toPackageDTO(deliveryPackage);
+        return deliveryPackageMapper.toPackageDTO(deliveryPackage);
     }
-
 
     @Transactional
     public void deletePackageForCourier(Integer packageId, UUID courierId) {
@@ -72,27 +78,6 @@ public class DeliveryPackageService {
     }
 
     @Transactional
-    public DeliveryPackageDTO updatePackageDetails(DeliveryPackageDTO deliveryPackageDTO) {
-        Integer packageId = deliveryPackageDTO.getIdPackage();
-        DeliveryPackage deliveryPackage = deliveryPackageRepository.findById(packageId)
-                .orElseThrow(() -> new EntityNotFoundException("Package with id " + packageId + " not found"));
-        if (deliveryPackage.getDeliveryPackageStatus() == DeliveryPackageStatus.DELIVERED) {
-            throw new IllegalStateException("Cannot update a package that has been delivered");
-        }
-        deliveryPackage.setDeliveryAddress(deliveryPackageDTO.getDeliveryAddress());
-        deliveryPackage.setDeliveryPackageStatus(deliveryPackageDTO.getDeliveryPackageStatus());
-        deliveryPackage = deliveryPackageRepository.save(deliveryPackage);
-        return deviveryPackageMapper.toPackageDTO(deliveryPackage);
-    }
-
-    public List<DeliveryPackageDTO> getPackagesForCourier(UUID courierId) {
-        return deliveryPackageRepository.getPackagesForCourier(courierId)
-                .stream()
-                .map(deviveryPackageMapper::toPackageDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
     public DeliveryPackageDTO updatePackageStatus(Integer packageId, DeliveryPackageStatus status) {
         DeliveryPackage deliveryPackage = deliveryPackageRepository.findById(packageId)
                 .orElseThrow(() -> new EntityNotFoundException("Package with id " + packageId + " not found"));
@@ -103,9 +88,31 @@ public class DeliveryPackageService {
 
         deliveryPackage.setDeliveryPackageStatus(status);
         deliveryPackage = deliveryPackageRepository.save(deliveryPackage);
-        return deviveryPackageMapper.toPackageDTO(deliveryPackage);
+
+        String clientEmail = deliveryPackage.getClientEmail();
+        if (status == DeliveryPackageStatus.PENDING) {
+            emailService.sendEmail(
+                    clientEmail,
+                    "Your package is on the way!",
+                    "Hello, your package is now in transit. Expect delivery soon. Thank you!"
+            );
+        } else if (status == DeliveryPackageStatus.DELIVERED) {
+            emailService.sendEmail(
+                    clientEmail,
+                    "Your package has been delivered!",
+                    "Hello, your package has been successfully delivered. Please rate our service! Thank you!"
+            );
+        }
+
+        return deliveryPackageMapper.toPackageDTO(deliveryPackage);
     }
 
+    public List<DeliveryPackageDTO> getPackagesForCourier(UUID courierId) {
+        return deliveryPackageRepository.getPackagesForCourier(courierId)
+                .stream()
+                .map(deliveryPackageMapper::toPackageDTO)
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     public DeliveryPackageDTO assignPackageToLeastBusyCourier(DeliveryPackageDTO deliveryPackageDTO) {
@@ -119,11 +126,11 @@ public class DeliveryPackageService {
         Courier courier = courierRepository.findById(courierId)
                 .orElseThrow(() -> new EntityNotFoundException("Courier with id " + courierId + " not found"));
 
-        DeliveryPackage deliveryPackage = deviveryPackageMapper.toDeliveryPackage(deliveryPackageDTO);
+        DeliveryPackage deliveryPackage = deliveryPackageMapper.toDeliveryPackage(deliveryPackageDTO);
         deliveryPackage.setCourier(courier);
 
         deliveryPackage = deliveryPackageRepository.save(deliveryPackage);
 
-        return deviveryPackageMapper.toPackageDTO(deliveryPackage);
+        return deliveryPackageMapper.toPackageDTO(deliveryPackage);
     }
 }

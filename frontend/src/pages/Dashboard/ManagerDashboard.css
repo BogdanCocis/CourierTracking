@@ -1,0 +1,104 @@
+.manager-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.manager-dashboard-title {
+    color: #800020;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.package-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 90%;
+}
+
+.package-card {
+    background-color: #fff;
+    border: 2px solid #800020;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+}
+
+.package-card-text {
+    margin: 8px 0;
+    font-size: 16px;
+    color: black;
+}
+
+.package-card-text strong {
+    color: #800020;
+}
+
+.package-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.package-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+}
+
+.package-button.delivered {
+    background-color: #4CAF50;
+}
+
+.package-button.delivered:hover {
+    background-color: #388E3C;
+}
+
+.package-button.not-home {
+    background-color: #FFA500;
+}
+
+.package-button.not-home:hover {
+    background-color: #FF8C00;
+}
+
+.package-button.denied {
+    background-color: #FF5733;
+}
+
+.package-button.denied:hover {
+    background-color: #E53935;
+}
+
+.package-button.in-progress {
+    background-color: #5D99C6;
+}
+
+.package-button.in-progress:hover {
+    background-color: #3F7FB1;
+}
+
+.package-button.disabled {
+    background-color: #e0e0e0;
+    color: #a0a0a0;
+    cursor: not-allowed;
+    border: 1px solid #d0d0d0;
+    pointer-events: none;
+}

@@ -25,7 +25,7 @@ public class SecurityConfiguration {
                 .authorizeRequests(authz ->
                 {
 
-                    authz.requestMatchers(HttpMethod.POST,"/api/login").permitAll();
+                    authz.requestMatchers(HttpMethod.POST, "/api/login").permitAll();
                     authz.requestMatchers(HttpMethod.POST, "api/register").permitAll();
 
                 }).csrf(AbstractHttpConfigurer::disable);
@@ -36,7 +36,7 @@ public class SecurityConfiguration {
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry){
+            public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
                         .allowedOrigins("http://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")

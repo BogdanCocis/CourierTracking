@@ -14,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
 public class DeliveryPackage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,7 @@ public class DeliveryPackage {
 
     @ManyToOne
     @JoinColumn(name = "courier_id", nullable = false)
-   private Courier courier;
+    private Courier courier;
 
     @Column(name = "createdOn", nullable = false)
     @CreationTimestamp

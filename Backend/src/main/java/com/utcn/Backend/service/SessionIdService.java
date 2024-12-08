@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -16,10 +17,16 @@ public class SessionIdService {
     public void save(Session session) {
         sessionIdRepository.save(session);
     }
+
     public Optional<Session> findByUserId(Courier courier) {
         return sessionIdRepository.findByCourier(courier);
     }
+
     public void delete(Session session) {
         sessionIdRepository.delete(session);
+    }
+
+    public Optional<Session> findBySessionId(UUID sessionId) {
+        return sessionIdRepository.findById(sessionId);
     }
 }

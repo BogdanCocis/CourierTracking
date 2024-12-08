@@ -12,7 +12,8 @@ import java.util.UUID;
 @Repository
 public interface CourierRepository extends JpaRepository<Courier, UUID> {
     Optional<Courier> findByEmail(String email);
-        boolean existsByEmail(String email);
+
+    boolean existsByEmail(String email);
 
     @Query("SELECT c FROM Courier c WHERE c.idCourier NOT IN (SELECT dp.courier.idCourier FROM DeliveryPackage dp WHERE dp.deliveryPackageStatus = 'PENDING')")
     List<Courier> getAllCouriersWithoutPendingPackages();

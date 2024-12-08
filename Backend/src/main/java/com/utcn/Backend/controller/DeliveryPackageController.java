@@ -1,9 +1,10 @@
 package com.utcn.Backend.controller;
 
 import com.utcn.Backend.dto.DeliveryPackageDTO;
-import com.utcn.Backend.entity.DeliveryPackageStatus;
 import com.utcn.Backend.service.DeliveryPackageService;
+import com.utcn.Backend.service.SessionIdService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,11 +12,16 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/packages")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+
 public class DeliveryPackageController {
 
     @Autowired
     private DeliveryPackageService deliveryPackageService;
+
+    @Autowired
+    private SessionIdService sessionIdService;
+
 
     @GetMapping
     public List<DeliveryPackageDTO> getAllPackages() {
@@ -40,10 +46,23 @@ public class DeliveryPackageController {
     }
 
     @PutMapping("/{packageId}/status")
-    public DeliveryPackageDTO updatePackageStatus(
+    public ResponseEntity<DeliveryPackageDTO> updatePackageStatus(
             @PathVariable Integer packageId,
             @RequestBody DeliveryPackageDTO deliveryPackageDTO) {
-        return deliveryPackageService.updatePackageStatus(packageId, deliveryPackageDTO.getDeliveryPackageStatus());
+        if (deliveryPackageDTO.getDeliveryPackageStatus() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        DeliveryPackageDTO updatedPackage = deliveryPackageService.updatePackageStatus(
+                packageId, deliveryPackageDTO.getDeliveryPackageStatus());
+
+        return ResponseEntity.ok(updatedPackage);
+    }
+
+    @DeleteMapping("/{packageId}")
+    public ResponseEntity<Void> deletePackage(@PathVariable Integer packageId) {
+        deliveryPackageService.deletePackage(packageId);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/courier/{courierId}")

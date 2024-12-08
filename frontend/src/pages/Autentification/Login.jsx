@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
@@ -12,37 +12,22 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(email)) {
-            setError("Invalid email or password!");
-            return;
-        }
-
-        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,12}$/;
-        if (!passwordRegex.test(password)) {
-            setError("Invalid email or password!");
-            return;
-        }
-
         try {
             const response = await axios.post(
                 "http://localhost:8080/api/login",
-                {
-                    email,
-                    password,
-                },
-                { withCredentials: true }
+                {email, password},
+                {withCredentials: true}
             );
 
-            const role = response.data;
-            setError("Successful authentication");
+            const {id: courierId, role} = response.data.courier;
 
             if (role === "MANAGER") {
-                navigate("/ManagerDashboard");
+                navigate("/ManagerDashboard", {state: {courierId}});
             } else if (role === "COURIER") {
-                navigate("/CourierDashboard");
+                navigate("/CourierDashboard", {state: {courierId}});
             }
         } catch (error) {
+            console.error("Login error:", error);
             setError("Invalid email or password!");
         }
     };
@@ -51,9 +36,7 @@ const Login = () => {
         <div id="login-body">
             <div className="navbar-login">Log in</div>
             <form className="login-form" onSubmit={handleSubmit}>
-                <label className="login-label" htmlFor="email">
-                    Email
-                </label>
+                <label className="login-label" htmlFor="email">Email</label>
                 <input
                     className="login-input"
                     type="text"
@@ -63,9 +46,7 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
-                <label className="login-label" htmlFor="password">
-                    Password
-                </label>
+                <label className="login-label" htmlFor="password">Password</label>
                 <input
                     type="password"
                     id="password"

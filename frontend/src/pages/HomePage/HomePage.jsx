@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./HomePage.css";
 
 const HomePage = () => {
@@ -22,7 +22,8 @@ const HomePage = () => {
             <div className="homepage-content">
                 <h1 className="homepage-title">Fast, Secure, and Reliable Deliveries</h1>
                 <p className="homepage-description">
-                    Welcome to the Courier Platform. Deliver packages efficiently and ensure customer satisfaction with our advanced tools and optimized routes.
+                    Welcome to the Courier Platform. Deliver packages efficiently and ensure customer satisfaction with
+                    our advanced tools and optimized routes.
                 </p>
             </div>
 

@@ -1,0 +1,104 @@
+.courier-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.courier-dashboard-title {
+    color: #800020;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.delivery-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 90%;
+}
+
+.delivery-card {
+    background-color: #fff;
+    border: 2px solid #800020;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+}
+
+.delivery-card-text {
+    margin: 8px 0;
+    font-size: 16px;
+    color: black;
+}
+
+.delivery-card-text strong {
+    color: #800020;
+}
+
+.delivery-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.delivery-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+}
+
+.delivery-button.delivered {
+    background-color: #4CAF50;
+}
+
+.delivery-button.delivered:hover {
+    background-color: #388E3C;
+}
+
+.delivery-button.not-home {
+    background-color: #FFA500;
+}
+
+.delivery-button.not-home:hover {
+    background-color: #FF8C00;
+}
+
+.delivery-button.denied {
+    background-color: #FF5733;
+}
+
+.delivery-button.denied:hover {
+    background-color: #E53935;
+}
+
+.delivery-button.in-progress {
+    background-color: #5D99C6;
+}
+
+.delivery-button.in-progress:hover {
+    background-color: #3F7FB1;
+}
+
+.delivery-button.disabled {
+    background-color: #e0e0e0;
+    color: #a0a0a0;
+    cursor: not-allowed;
+    border: 1px solid #d0d0d0;
+    pointer-events: none;
+}

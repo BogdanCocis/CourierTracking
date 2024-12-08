@@ -82,30 +82,61 @@ public class DeliveryPackageService {
         DeliveryPackage deliveryPackage = deliveryPackageRepository.findById(packageId)
                 .orElseThrow(() -> new EntityNotFoundException("Package with id " + packageId + " not found"));
 
-        if (deliveryPackage.getDeliveryPackageStatus() == DeliveryPackageStatus.DELIVERED) {
-            throw new IllegalStateException("Cannot update a package that has already been delivered");
+        if (deliveryPackage.getDeliveryPackageStatus() == DeliveryPackageStatus.DELIVERED
+                || deliveryPackage.getDeliveryPackageStatus() == DeliveryPackageStatus.DENIED) {
+            throw new IllegalStateException("Cannot update a package that has already been delivered or denied.");
         }
 
         deliveryPackage.setDeliveryPackageStatus(status);
         deliveryPackage = deliveryPackageRepository.save(deliveryPackage);
 
         String clientEmail = deliveryPackage.getClientEmail();
-        if (status == DeliveryPackageStatus.PENDING) {
-            emailService.sendEmail(
-                    clientEmail,
-                    "Your package is on the way!",
-                    "Hello, your package is now in transit. Expect delivery soon. Thank you!"
-            );
-        } else if (status == DeliveryPackageStatus.DELIVERED) {
-            emailService.sendEmail(
-                    clientEmail,
-                    "Your package has been delivered!",
-                    "Hello, your package has been successfully delivered. Please rate our service! Thank you!"
-            );
+        switch (status) {
+            case NEW:
+            case PENDING:
+                emailService.sendEmail(
+                        clientEmail,
+                        "Your package is on the way!",
+                        "Hello,\n\nYour package is now in transit. Expect delivery soon.\n\nThank you!"
+                );
+                break;
+            case DELIVERED:
+                emailService.sendEmail(
+                        clientEmail,
+                        "Your package has been delivered!",
+                        "Hello,\n\nYour package has been successfully delivered. Please rate our service!\n\nThank you!"
+                );
+                break;
+            case NOT_HOME:
+                emailService.sendEmail(
+                        clientEmail,
+                        "Attempted Delivery - We Missed You",
+                        "Hello,\n\nWe attempted to deliver your package, but we couldn't find you at home. " +
+                                "Please contact us or visit your nearest pick-up point to retrieve your package.\n\nThank you for choosing our services!"
+                );
+                break;
+            case DENIED:
+                emailService.sendEmail(
+                        clientEmail,
+                        "Your package delivery has been denied",
+                        "Hello,\n\nUnfortunately, the delivery of your package has been denied. Please contact us for further assistance.\n\nThank you!"
+                );
+                break;
+            default:
+                throw new IllegalStateException("Unknown package status: " + status);
         }
 
         return deliveryPackageMapper.toPackageDTO(deliveryPackage);
     }
+
+
+    @Transactional
+    public void deletePackage(Integer packageId) {
+        deliveryPackageRepository.findById(packageId)
+                .orElseThrow(() -> new EntityNotFoundException("Package with id " + packageId + " not found"));
+        deliveryPackageRepository.deleteById(packageId);
+    }
+
 
     public List<DeliveryPackageDTO> getPackagesForCourier(UUID courierId) {
         return deliveryPackageRepository.getPackagesForCourier(courierId)

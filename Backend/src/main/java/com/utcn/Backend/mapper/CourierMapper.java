@@ -6,6 +6,7 @@ import com.utcn.Backend.entity.Courier;
 import org.springframework.stereotype.Component;
 
 @Component
+
 public class CourierMapper {
 
     public static Courier toCourier(RegisterDTO registerDTO) {

@@ -12,6 +12,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class DeliveryPackageDTO {
     private Integer idPackage;
     private Date createdOn;

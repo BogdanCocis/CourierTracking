@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+
 public class CourierService {
     private final CourierRepository courierRepository;
     private final SessionIdService sessionIdService;
@@ -32,7 +33,6 @@ public class CourierService {
     private final CourierMapper courierMapper;
 
     public Session login(String loginEmail, String loginPassword) throws Exception {
-
 
         Optional<Courier> courier = courierRepository.findByEmail(loginEmail);
         if (courier.isPresent()) {
@@ -115,7 +115,6 @@ public class CourierService {
                         .build())
                 .collect(Collectors.toList());
     }
-
 }
 
 

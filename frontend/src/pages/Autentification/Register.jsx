@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import "./Register.css";
 import "./Login"
 
@@ -16,7 +16,7 @@ const Register = () => {
             const value = event.target.value;
             setField(value);
             setErrors((prevErrors) => {
-                const newErrors = { ...prevErrors };
+                const newErrors = {...prevErrors};
                 delete newErrors[fieldName];
                 return newErrors;
             });
@@ -153,7 +153,7 @@ const Register = () => {
             <h1 className="navbar-register">Register</h1>
             <div className="container-register">
                 <form className="Register" onSubmit={handleSubmit}>
-                    {fields.map(({ label, type, value, id, handler, error }) => (
+                    {fields.map(({label, type, value, id, handler, error}) => (
                         <div key={label}>
                             <label id="label-register">{label}</label>
                             <input

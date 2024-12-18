@@ -34,4 +34,9 @@ public class CourierController {
     public List<ManagerDeliveredDTO> getAllManagersAndDeliveredNumber() {
         return courierService.getAllManagersAndDeliveredNumber();
     }
+
+    @GetMapping
+    public List<CourierDTO> getAllCouriers() {
+        return courierService.getAllCouriers();
+    }
 }

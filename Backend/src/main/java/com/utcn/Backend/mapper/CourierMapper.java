@@ -18,7 +18,6 @@ public class CourierMapper {
                 .build();
     }
 
-
     public CourierDTO toCourierDTO(Courier courier) {
         return CourierDTO.builder()
                 .idCourier(courier.getIdCourier())

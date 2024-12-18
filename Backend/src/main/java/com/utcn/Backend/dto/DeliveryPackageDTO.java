@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -14,10 +15,12 @@ import java.util.Date;
 @NoArgsConstructor
 
 public class DeliveryPackageDTO {
+    private UUID courierId;
     private Integer idPackage;
     private Date createdOn;
     private String deliveryAddress;
     private boolean payOnDelivery;
     private DeliveryPackageStatus deliveryPackageStatus;
     private String clientEmail;
+    private String courierName;
 }

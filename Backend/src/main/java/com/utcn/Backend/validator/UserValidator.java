@@ -78,7 +78,6 @@ public class UserValidator {
         }
     }
 
-
     public static void validateRegister(RegisterDTO registerDto) throws InvalidDataException {
         UserValidator.validateEmail(registerDto.getEmail());
         UserValidator.validatePassword(registerDto.getPassword());

@@ -42,6 +42,20 @@ public class DeliveryPackageService {
                 .collect(Collectors.toList());
     }
 
+    public List<DeliveryPackageDTO> getAllPackagesWithCourier() {
+        List<Object[]> results = deliveryPackageRepository.getAllPackagesWithCourier();
+        return results.stream().map(row -> DeliveryPackageDTO.builder()
+                .idPackage((Integer) row[0])
+                .deliveryAddress((String) row[1])
+                .payOnDelivery((Boolean) row[2])
+                .deliveryPackageStatus((DeliveryPackageStatus) row[3])
+                .clientEmail((String) row[4])
+                .courierName((String) row[5])
+                .build()
+        ).collect(Collectors.toList());
+    }
+
+
     @Transactional
     public DeliveryPackageDTO createNewPackage(DeliveryPackageDTO deliveryPackageDTO) {
         List<Object[]> results = deliveryPackageRepository.findCourierWithFewestPackages();
@@ -73,7 +87,6 @@ public class DeliveryPackageService {
         if (!deliveryPackage.getCourier().getIdCourier().equals(courierId)) {
             throw new IllegalStateException("Courier is not authorized to delete this package");
         }
-
         deliveryPackageRepository.deleteById(packageId);
     }
 
@@ -162,6 +175,25 @@ public class DeliveryPackageService {
 
         deliveryPackage = deliveryPackageRepository.save(deliveryPackage);
 
+        return deliveryPackageMapper.toPackageDTO(deliveryPackage);
+    }
+
+    @Transactional
+    public DeliveryPackageDTO updatePackageDetails(Integer packageId, DeliveryPackageDTO deliveryPackageDTO) {
+        DeliveryPackage deliveryPackage = deliveryPackageRepository.findById(packageId)
+                .orElseThrow(() -> new EntityNotFoundException("Package with id " + packageId + " not found"));
+
+        if (deliveryPackageDTO.getDeliveryAddress() != null) {
+            deliveryPackage.setDeliveryAddress(deliveryPackageDTO.getDeliveryAddress());
+        }
+
+        if (deliveryPackageDTO.getCourierId() != null) {
+            Courier courier = courierRepository.findById(deliveryPackageDTO.getCourierId())
+                    .orElseThrow(() -> new EntityNotFoundException("Courier not found"));
+            deliveryPackage.setCourier(courier);
+        }
+
+        deliveryPackageRepository.save(deliveryPackage);
         return deliveryPackageMapper.toPackageDTO(deliveryPackage);
     }
 }

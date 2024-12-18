@@ -4,6 +4,7 @@ import axios from "axios";
 import Confetti from "react-confetti";
 import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "../UserNavbar/Navbar";
 import "./CourierDashboard.css";
 
 const CourierDashboard = () => {
@@ -11,6 +12,7 @@ const CourierDashboard = () => {
     const [showConfetti, setShowConfetti] = useState(false);
     const location = useLocation();
     const courierId = location.state?.courierId;
+    const role = location.state?.role;
 
     const sortDeliveries = (deliveries) => {
         const order = ["NEW", "PENDING", "NOT_HOME", "DELIVERED", "DENIED"];
@@ -78,10 +80,9 @@ const CourierDashboard = () => {
 
     return (
         <div className="courier-dashboard-container">
-            <h1 className="courier-dashboard-title">Welcome Courier</h1>
+            <Navbar role={role}/>
 
             {showConfetti && <Confetti/>}
-
             <ToastContainer/>
 
             {deliveries.length === 0 ? (

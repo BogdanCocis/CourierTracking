@@ -76,7 +76,7 @@ public class CourierService {
         Courier defaultManager = null;
         if (registerDTO.getCourierRole() == null || registerDTO.getCourierRole() == CourierRole.COURIER) {
             if (registerDTO.getManagerId() == null || registerDTO.getManagerId().isEmpty()) {
-                defaultManager = courierRepository.findByEmail("cocis.bogdan@yahoo.com")
+                defaultManager = courierRepository.findByEmail("***EMAIL***")
                         .orElseThrow(() -> new InvalidDataException("Default manager not found!"));
             } else {
                 defaultManager = courierRepository.findById(UUID.fromString(registerDTO.getManagerId()))
@@ -113,6 +113,13 @@ public class CourierService {
                         .managerEmail((String) result[1])
                         .deliveredCount((Long) result[2])
                         .build())
+                .collect(Collectors.toList());
+    }
+
+    public List<CourierDTO> getAllCouriers() {
+        return courierRepository.findAll()
+                .stream()
+                .map(courierMapper::toCourierDTO)
                 .collect(Collectors.toList());
     }
 }

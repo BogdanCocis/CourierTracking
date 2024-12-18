@@ -28,6 +28,11 @@ public class DeliveryPackageController {
         return deliveryPackageService.getAllPackage();
     }
 
+    @GetMapping("/with-courier")
+    public List<DeliveryPackageDTO> getAllPackagesWithCourier() {
+        return deliveryPackageService.getAllPackagesWithCourier();
+    }
+
     @PostMapping
     public DeliveryPackageDTO createDeliveryPackage(@RequestBody DeliveryPackageDTO deliveryPackageDTO) {
         return deliveryPackageService.createNewPackage(deliveryPackageDTO);
@@ -56,6 +61,13 @@ public class DeliveryPackageController {
         DeliveryPackageDTO updatedPackage = deliveryPackageService.updatePackageStatus(
                 packageId, deliveryPackageDTO.getDeliveryPackageStatus());
 
+        return ResponseEntity.ok(updatedPackage);
+    }
+
+    @PutMapping("/{packageId}")
+    public ResponseEntity<DeliveryPackageDTO> updatePackageDetails(
+            @PathVariable Integer packageId, @RequestBody DeliveryPackageDTO deliveryPackageDTO) {
+        DeliveryPackageDTO updatedPackage = deliveryPackageService.updatePackageDetails(packageId, deliveryPackageDTO);
         return ResponseEntity.ok(updatedPackage);
     }
 

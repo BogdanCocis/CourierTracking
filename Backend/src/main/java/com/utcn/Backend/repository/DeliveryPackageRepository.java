@@ -17,4 +17,9 @@ public interface DeliveryPackageRepository extends JpaRepository<DeliveryPackage
 
     @Query("SELECT c.idCourier, COUNT(dp) FROM DeliveryPackage dp RIGHT JOIN dp.courier c GROUP BY c.idCourier ORDER BY COUNT(dp) ASC")
     List<Object[]> findCourierWithFewestPackages();
+
+    @Query("SELECT dp.idPackage, dp.deliveryAddress, dp.payOnDelivery, dp.deliveryPackageStatus, dp.clientEmail, " +
+            "CASE WHEN dp.courier IS NOT NULL THEN dp.courier.name ELSE 'Not Assigned' END AS courierName " +
+            "FROM DeliveryPackage dp")
+    List<Object[]> getAllPackagesWithCourier();
 }

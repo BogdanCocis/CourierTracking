@@ -112,6 +112,7 @@ const Register = () => {
         if (password !== confirmPassword) {
             newErrors.password = "The passwords aren't the same";
         }
+
         if (passwordError) {
             newErrors.password = passwordError;
         }

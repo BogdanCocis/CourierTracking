@@ -8,7 +8,7 @@ import Register from "./pages/Autentification/Register";
 import HomePage from "./pages/HomePage/HomePage";
 import ManagerDashboard from "./pages/Dashboard/ManagerDashboard";
 import CourierDashboard from "./pages/Dashboard/CourierDashboard";
-
+import ControlManagement from "./pages/ControlManagement/ControlManagement";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +30,10 @@ const router = createBrowserRouter([
     {
         path: "/courierdashboard",
         element: <CourierDashboard/>
+    },
+    {
+        path: "controlmanagement",
+        element: <ControlManagement/>
     }
 ]);
 

@@ -22,9 +22,9 @@ const Login = () => {
             const {id: courierId, role} = response.data.courier;
 
             if (role === "MANAGER") {
-                navigate("/ManagerDashboard", {state: {courierId}});
+                navigate("/managerdashboard", {state: {courierId, role}});
             } else if (role === "COURIER") {
-                navigate("/CourierDashboard", {state: {courierId}});
+                navigate("/courierdashboard", {state: {courierId, role}});
             }
         } catch (error) {
             console.error("Login error:", error);
@@ -63,9 +63,13 @@ const Login = () => {
                     </button>
                 </div>
                 <p className="center-link">
-                    <a className="login-a" href="#" onClick={() => navigate("/Register")}>
+                    <button
+                        className="login-a"
+                        type="button"
+                        onClick={() => navigate("/Register")}
+                    >
                         Don't have an account?
-                    </a>
+                    </button>
                 </p>
             </form>
         </div>

@@ -4,6 +4,7 @@ import axios from "axios";
 import Confetti from "react-confetti";
 import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "../UserNavbar/Navbar";
 import "./ManagerDashboard.css";
 
 const ManagerDashboard = () => {
@@ -11,6 +12,7 @@ const ManagerDashboard = () => {
     const [showConfetti, setShowConfetti] = useState(false);
     const location = useLocation();
     const courierId = location.state?.courierId;
+    const role = location.state?.role;
 
     const sortPackages = (packages) => {
         const order = ["NEW", "PENDING", "NOT_HOME", "DELIVERED", "DENIED"];
@@ -78,10 +80,9 @@ const ManagerDashboard = () => {
 
     return (
         <div className="manager-dashboard-container">
-            <h1 className="manager-dashboard-title">Hello Manager</h1>
+            <Navbar role={role}/>
 
             {showConfetti && <Confetti/>}
-
             <ToastContainer/>
 
             {packages.length === 0 ? (

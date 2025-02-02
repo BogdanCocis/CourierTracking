@@ -13,7 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class Courier {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

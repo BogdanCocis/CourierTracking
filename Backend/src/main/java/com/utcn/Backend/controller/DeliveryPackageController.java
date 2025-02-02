@@ -22,7 +22,6 @@ public class DeliveryPackageController {
     @Autowired
     private SessionIdService sessionIdService;
 
-
     @GetMapping
     public List<DeliveryPackageDTO> getAllPackages() {
         return deliveryPackageService.getAllPackage();

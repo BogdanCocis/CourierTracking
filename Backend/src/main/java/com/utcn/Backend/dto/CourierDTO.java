@@ -11,7 +11,6 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class CourierDTO {
     private UUID idCourier;
     private String name;

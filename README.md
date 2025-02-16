@@ -51,65 +51,67 @@ The Courier Management System is a comprehensive platform designed to streamline
       npm start
       ```
 
-
-
 ## Usage
 - **Login**: Access the login page and enter your credentials to log in.
 <div align="center">
-  <img width="700" alt="log in" src="https://github.com/user-attachments/assets/12eda4ae-a644-49e3-98ae-f02d33554004" />
+  <img width="750" alt="log in" src="https://github.com/user-attachments/assets/12eda4ae-a644-49e3-98ae-f02d33554004" />
 </div>
 <br><br> 
 
 - **Register**: Use the registration page to create a new courier account.
 <div align="center"> 
-  <img width="700" alt="Register" src="https://github.com/user-attachments/assets/a5dd1b51-cdd6-4194-aa24-35e8f3f107dd" />
+  <img width="750" alt="Register" src="https://github.com/user-attachments/assets/a5dd1b51-cdd6-4194-aa24-35e8f3f107dd" />
 </div>
 <br><br> 
 
 - **Dashboard**: 
   - Couriers can view and manage their assigned packages.
 <div align="center"> 
-  <img width="700" alt="courier_dashboard" src="https://github.com/user-attachments/assets/8780db75-29e9-41d1-84f7-d207ff4619d4" />
+  <img width="750" alt="courier_dashboard" src="https://github.com/user-attachments/assets/8780db75-29e9-41d1-84f7-d207ff4619d4" />
 </div>
 <br><br> 
 
   - Managers can view all couriers, manage packages, and view delivery statistics.
 <div align="center"> 
-  <img width="700" alt="manager_dashboard" src="https://github.com/user-attachments/assets/bed7e330-7a7c-4a3c-83fa-a12efde4af30" />
+  <img width="750" alt="manager_dashboard" src="https://github.com/user-attachments/assets/bed7e330-7a7c-4a3c-83fa-a12efde4af30" />
 </div>
 <br><br> 
 
 <div align="center">
-  <img width="700" alt="Control management" src="https://github.com/user-attachments/assets/bdfe84f1-b558-43d5-bdef-439e4cd48268" />
+  <img width="750" alt="Control management" src="https://github.com/user-attachments/assets/bdfe84f1-b558-43d5-bdef-439e4cd48268" />
 </div>
 <br><br>
 
 <div align="center"> 
-  <img width="700" alt="add_package" src="https://github.com/user-attachments/assets/0e4c7015-6145-4be0-bfa0-2f07d5dd61a9" />
+  <img width="750" alt="add_package" src="https://github.com/user-attachments/assets/0e4c7015-6145-4be0-bfa0-2f07d5dd61a9" />
 </div>
 <br><br>
 
 <div align="center">
-  <img width="700" alt="edit_package" src="https://github.com/user-attachments/assets/3c23b25d-8613-4359-952e-128887fc08d2" />
+  <img width="750" alt="edit_package" src="https://github.com/user-attachments/assets/3c23b25d-8613-4359-952e-128887fc08d2" />
 </div>
-
-
+<br><br>
 
  ## Database Schema
 
  The database schema for the Package Tracking System is visually represented below:
-
-<img width="720" alt="db_courier" src="https://github.com/user-attachments/assets/d82a0c81-9086-4bce-ba0e-26a1fd920abb" />
+<div align="center">
+  <img width="750" alt="db_courier" src="https://github.com/user-attachments/assets/d82a0c81-9086-4bce-ba0e-26a1fd920abb" />
+</div>
+<br><br>
 
 ## Diagrams
 ### Use Case Diagram
-
-<img width="934" alt="Screenshot 2025-01-10 at 17 19 39" src="https://github.com/user-attachments/assets/d29a07e2-092a-4a2b-af7b-d8cc3e238817" />
-
+<div align="center">
+  <img width="750" alt="Screenshot 2025-01-10 at 17 19 39" src="https://github.com/user-attachments/assets/d29a07e2-092a-4a2b-af7b-d8cc3e238817" />
+</div>
+<br><br>
 
 ### Flow Chart
+<div align="center">
+<img width="750" src="https://github.com/user-attachments/assets/b618aaee-2781-470b-bcb0-acb3bf011421" alt="Flow Chart" />
+</div>
 
-![Flow](https://github.com/user-attachments/assets/852c9ed6-468a-4d33-a7b7-b769be416dbd)
 
 
 
